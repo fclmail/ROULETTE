@@ -1,0 +1,105 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Roulette Wheel</title>  
+    <style>  
+        /* Basic styling for the body */  
+        body {  
+            display: flex;  
+            flex-direction: column; /* Stack items vertically */  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+            background-color: #f9f9f9; /* Light background color */  
+        }  
+
+        /* Style for the roulette wheel container */  
+        .wheel {  
+            width: 300px; /* Width of the wheel */  
+            height: 300px; /* Height of the wheel */  
+            border: 16px solid #333; /* Border around the wheel */  
+            border-radius: 50%; /* Make it circular */  
+            position: relative; /* Positioning for child elements */  
+            overflow: hidden; /* Hide overflow to maintain circular shape */  
+            transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1); /* Smooth spinning transition */  
+        }  
+
+        /* Style for each section of the wheel */  
+        .section {  
+            position: absolute; /* Positioning to place sections accurately */  
+            width: 50%; /* Each section takes half the radius */  
+            height: 50%; /* Each section takes half the radius */  
+            background-color: lightgray; /* Default section color */  
+            border-right: 2px solid white; /* Separator between sections */  
+            transform-origin: 100% 100%; /* Rotation point for each section */  
+            display: flex; /* Use flex to center the amount */  
+            justify-content: center; /* Center horizontally */  
+            align-items: center; /* Center vertically */  
+            font-size: 24px; /* Size of the amount */  
+            color: #333; /* Color of the amount */  
+            font-weight: bold; /* Bold font */  
+        }  
+
+        /* Specific colors for each section */  
+        .section:nth-child(1) { background-color: #ff9999; transform: rotate(0deg); }  
+        .section:nth-child(2) { background-color: #99ff9999; transform: rotate(72deg); }  
+        .section:nth-child(3) { background-color: #9999ff; transform: rotate(144deg); }  
+        .section:nth-child(4) { background-color: #ffff99; transform: rotate(216deg); }  
+        .section:nth-child(5) { background-color: #ffcc99; transform: rotate(288deg); }  
+
+        /* Style for the spin button */  
+        .spin-button {  
+            margin-top: 20px; /* Space above the button */  
+            padding: 10px 20px; /* Button padding */  
+            font-size: 18px; /* Increase font size */  
+            border: none; /* No border */  
+            border-radius: 5px; /* Rounded corners */  
+            background-color: #333; /* Dark background */  
+            color: white; /* White text color */  
+            cursor: pointer; /* Pointer cursor on hover */  
+            transition: background-color 0.3s; /* Transition effect for hover */  
+        }  
+
+        /* Button hover effect */  
+        .spin-button:hover {  
+            background-color: #555; /* Change to a lighter shade on hover */  
+        }  
+    </style>  
+</head>  
+<body>  
+
+    <!-- Roulette wheel container -->  
+    <div class="wheel" id="wheel">  
+        <!-- Sections on the wheel, each with a dollar amount -->  
+        <div class="section" data-number="$1,000">$1,000</div>  
+        <div class="section" data-number="$10,000">$10,000</div>  
+        <div class="section" data-number="$500">$500</div>  
+        <div class="section" data-number="$1,000,000">$1,000,000</div>  
+        <div class="section" data-number="$7,000">$7,000</div>  
+    </div>  
+
+    <!-- Spin button -->  
+    <button class="spin-button" id="spinButton">Spin</button>  
+
+    <script>  
+        // Get the wheel element and button  
+        const wheel = document.getElementById('wheel');  
+        const spinButton = document.getElementById('spinButton');  
+
+        // Spin logic  
+        spinButton.addEventListener('click', function() {  
+            // Generate a random number of spins (between 5 to 8 spins)  
+            const spins = Math.floor(Math.random() * 4) + 5;  
+            // Calculate a random extra rotation within the section's angle (0 to 72 degrees)  
+            const degrees = spins * 360 + Math.floor(Math.random() * 72);  
+
+            // Apply the rotation to the wheel, resetting for each spin  
+            wheel.style.transition = 'transform 4s cubic-bezier(0.33, 1, 0.68, 1)'; // Reset transition  
+            wheel.style.transform = `rotate(${degrees}deg)`; // Rotate the wheel  
+        });  
+    </script>  
+</body>  
+</html>
